@@ -2,7 +2,10 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from .models import *
 
-menu = ['My page', 'Settings', 'My friends', 'Log out']
+menu = [{'title': 'My page', 'url_name': 'user_page'},
+        {'title': 'My friends', 'url_name': 'friends'},
+        {'title': 'Settings', 'url_name': 'settings'},
+        {'title': 'Log out', 'url_name': 'login'}]
 
 
 def user_page(request):

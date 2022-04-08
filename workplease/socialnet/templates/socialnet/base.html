@@ -8,8 +8,10 @@
 <body>
 <div class="sidenav">
     {% for m in menu %}
-    <ul><a href="#"><h2>{{m}}</h2></a></ul>
+    <ul><a href="{% url m.url_name %}"><h2>{{m.title}}</h2></a></ul>
     {% endfor %}
+    {% block content %}
+    {% endblock %}
 </div>
 </body>
 </html>

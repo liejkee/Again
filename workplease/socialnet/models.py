@@ -10,5 +10,4 @@ class UserInfo(models.Model):
     photo = models.ImageField(upload_to="photos/%Y/%m/%d/")
     is_private = models.BooleanField(default=True)
     create_time = models.DateTimeField(auto_now_add=True)
-    date_of_birth = models.DateTimeField(auto_now_add=False)
-
+    date_of_birth = models.DateTimeField(auto_now_add=True)
