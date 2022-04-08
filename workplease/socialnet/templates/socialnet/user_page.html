@@ -1,0 +1,13 @@
+{% extends 'socialnet/base.html' %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<ul>
+    {% for p in app_elements %}
+    <li>
+        <h2>{{p.first_name}}</h2>
+        <h2>{{p.second_name}}</h2>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+<div class="sidenav">
+    {% for m in menu %}
+    <ul><a href="#"><h2>{{m}}</h2></a></ul>
+    {% endfor %}
+</div>
+</body>
+</html>
