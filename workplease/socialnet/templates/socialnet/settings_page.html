@@ -2,13 +2,25 @@
 
 {% block content %}
 <h1>{{ title }}</h1>
-<form action="{% url 'user_page' %}" method="post">
-    {% csrf_token %}
-    <div class="form-error">{{ form.non_field_errors }}</div>
-    {% for f in form %}
-    <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
-    <div class="form-error">{{ f.errors }}</div>
-    {% endfor %}
-    <button type="submit">Save</button>
-</form>
+<style>
+    .main .messages {
+        position: fixed;
+        left:180px;
+    }
+
+</style>
+<div>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" value="submit">Save</button>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </form>
+</div>
 {% endblock %}
