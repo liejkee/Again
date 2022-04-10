@@ -3,6 +3,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <style>
+        .main {
+            margin-left:160px;
+            padding:0px 10px;
+            height:100%;
+            position: fixed;
+            left:0;
+            padding-left:60px;
+        }
+        .sidenav {
+            height:100%;
+            width:160px;
+            position: fixed;
+            left:0;
+        }
+    </style>
     <title>{{ title }}</title>
 </head>
 <body>
@@ -10,6 +26,8 @@
     {% for m in menu %}
     <ul><a href="{% url m.url_name %}"><h2>{{m.title}}</h2></a></ul>
     {% endfor %}
+</div>
+<div id="content" , name="content" , class="main">
     {% block content %}
     {% endblock %}
 </div>
