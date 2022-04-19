@@ -12,3 +12,8 @@ class UserInfo(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     date_of_birth = models.DateTimeField(auto_now_add=True)
 
+
+class UserCredentials(models.Model):
+    user_name = models.CharField(max_length=32)
+    password = models.CharField(max_length=32)
+    email = models.CharField(max_length=128)

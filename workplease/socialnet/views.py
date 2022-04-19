@@ -1,44 +1,30 @@
-from django.core.exceptions import ValidationError
-from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 menu = [{'title': 'My page', 'url_name': 'user_page'},
         {'title': 'My friends', 'url_name': 'friends'},
         {'title': 'Settings', 'url_name': 'settings'},
-        {'title': 'Log out', 'url_name': 'login'}]
+        {'title': 'Test Items', 'url_name': 'test_items'},
+        {'title': 'Logout', 'url_name': 'logout_user'}]
 
 
+@login_required(login_url='login_user')
 def user_page(request):
     app_elements = UserInfo.objects.all()[:1]
     return render(request, 'socialnet/user_page.html', {'app_elements': app_elements, 'menu': menu,
                                                         'title': 'My page'})
 
 
+@login_required(login_url='login_user')
 def friends(request):
     return render(request, 'socialnet/friends_page.html', {'menu': menu, 'title': 'My friends'})
 
 
-# def settings(request):
-#     form = UserForm()
-#     if request.method == 'POST':
-#         form = UserForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('settings')
-#     return render(request, 'socialnet/settings_page.html', {'form': form, 'menu': menu, 'title': 'Settings'})
-
-
-def login(request):
-    return render(request, 'socialnet/login_page.html', {'menu': menu, 'title': 'Login'})
-
-
-def view_404(request, exception=None):
-    return redirect('user_page', permanent=False)
-
-
+@login_required(login_url='login_user')
 def settings(request):
     app_elements = UserInfo.objects.get(id=1)
     form = UserForm()
@@ -52,3 +38,30 @@ def settings(request):
 
     return render(request, 'socialnet/settings_page.html', {'form': form, 'menu': menu,
                                                             'title': 'Settings'})
+
+
+@login_required(login_url='login_user')
+def test_items(request):
+    return render(request, 'socialnet/test_items_page.html', {'menu': menu, 'title': 'Test Items',
+                                                              'test_items': test_items})
+
+
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST['user_name']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('user_page')
+
+    return render(request, 'socialnet/login_page.html')
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('login_user')
+
+
+def view_404(request, exception=None):
+    return redirect('user_page', permanent=False)

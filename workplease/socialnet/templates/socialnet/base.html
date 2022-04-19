@@ -1,8 +1,5 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
     <style>
         .main {
             margin-left:160px;
@@ -21,6 +18,9 @@
     </style>
     <title>{{ title }}</title>
 </head>
+{% for u in UserInfo %}
+<h3>Hello, {{u.first_name}}!</h3>
+{% endfor %}
 <body>
 <div class="sidenav">
     {% for m in menu %}
