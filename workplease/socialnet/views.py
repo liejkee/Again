@@ -27,10 +27,10 @@ def friends(request):
 @login_required(login_url='login_user')
 def settings(request):
     app_elements = UserInfo.objects.get(id=1)
-    form = UserForm()
+    form = UserSettings()
 
     if request.method == 'POST':
-        form = UserForm(request.POST, instance=app_elements)
+        form = UserSettings(request.POST, instance=app_elements)
         if form.is_valid():
             messages.success(request, 'User data has changed successfully')
             form.save()
@@ -47,6 +47,7 @@ def test_items(request):
 
 
 def login_user(request):
+    page = 'login'
     if request.method == 'POST':
         username = request.POST['user_name']
         password = request.POST['password']
@@ -55,12 +56,30 @@ def login_user(request):
             login(request, user)
             return redirect('user_page')
 
-    return render(request, 'socialnet/login_page.html')
+    return render(request, 'socialnet/login_page.html', {'page': page})
 
 
 def logout_user(request):
     logout(request)
     return redirect('login_user')
+
+
+def register(request):
+    page = 'register'
+    form = UserForm(request.POST)
+
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+
+            user = authenticate(request, username=user.username, password=request.POST['password1'])
+            if user is not None:
+                login(request, user)
+                return redirect('user_page')
+
+    return render(request, 'socialnet/login_page.html', {'form': form, 'page': page})
 
 
 def view_404(request, exception=None):

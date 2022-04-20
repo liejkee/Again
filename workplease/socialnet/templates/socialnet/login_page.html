@@ -9,14 +9,31 @@
 <body>
 
 {% for message in messages %}
-    <p>{{message}}</p>
+<p>{{message}}</p>
 {% endfor %}
 
+{% if page == 'login' %}
 <form method="post" action="">
+    <h1>Login</h1>
     {% csrf_token %}
     <input type="text" name="user_name" placeholder="Username"><br>
-    <input type="password" name="password" placeholder="Password Name"><br>
+    <input type="password" name="password" placeholder="Password"><br>
     <input type="submit">
+    <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
 </form>
+{% else %}
+<form method="post">
+    <h1>Register</h1>
+    {% csrf_token %}
+    {% for f in form %}
+    <div>
+        <label>{{f.label}}</label>
+        {{f}}
+    </div>
+    {% endfor %}
+    <input type="submit">
+    <p>Already have an account ? <a href="{% url 'login_user' %}">Login</a></p>
+</form>
+{% endif %}
 </body>
 </html>
