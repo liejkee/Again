@@ -20,6 +20,18 @@ def user_page(request):
 
 
 @login_required(login_url='login_user')
+def edit_user_page(request):
+    app_elements = UserInfo.objects.get(id=1)
+    form = UserSettings(request.POST or None, instance=app_elements)
+    if form.is_valid():
+        messages.success(request, 'User data has changed successfully')
+        form.save()
+        return redirect('user_page')
+    return render(request, 'socialnet/edit_user_page.html', {'menu': menu, 'app_elements': app_elements,
+                                                             'title': 'Edit Information ', 'form': form})
+
+
+@login_required(login_url='login_user')
 def friends(request):
     return render(request, 'socialnet/friends_page.html', {'menu': menu, 'title': 'My friends'})
 

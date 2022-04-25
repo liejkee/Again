@@ -6,7 +6,7 @@
 <p>Full name:</p> <h2>{{ a.first_name }} {{ a.last_name }}</h2>
 <p>City:</p> <h2>{{ a.city }}</h2>
 <p>Nationality:</p> <h2>{{ a.nationality }}</h2>
-<p>Date of birth:</p> <h2>{{ a.date_of_birth }}</h2>
+<a href="{% url 'edit_user_page' %}">Edit</a>
 {% endfor %}
 
 {% endblock %}
